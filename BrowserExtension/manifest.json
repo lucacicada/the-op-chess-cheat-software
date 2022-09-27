@@ -1,0 +1,34 @@
+{
+  "name": "Spooky Chess Engine",
+  "description": "A browser extension that allows you to cheat at a game, sweet!",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.chess.com/*"
+      ],
+      "js": [
+        "chess.com.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "nativeMessaging",
+    "activeTab",
+    "cookies",
+    "storage",
+    "tabs",
+    "webRequest",
+    "webNavigation",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}
