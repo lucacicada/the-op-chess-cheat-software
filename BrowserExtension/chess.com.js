@@ -1,26 +1,30 @@
-// this is lazy, just use a MutationObserver
-setInterval(() => {
-  // figure out the board position
-  const black = document.querySelector('chess-board')?.classList.contains('flipped') || false
+function getBoardPosition() {
+  let pgn = ''
 
-  // extract the PGN position from the move list
-  let position = ''
+  for (const el of Array.from(document.querySelectorAll('[data-whole-move-number]'))) {
+    pgn += `${el.dataset.wholeMoveNumber}. `
 
-  for (const el of Array.from(document.querySelectorAll('vertical-move-list > .move'))) {
-    const number = el.dataset.wholeMoveNumber
+    for (const node of Array.from(el.querySelectorAll('[data-node]'))) {
+      const figurine = node.querySelector('[data-figurine]')?.dataset.figurine
 
-    position += `${number}. `
+      pgn += `${figurine || ''}${node.textContent.trim()} `
 
-    for (const node of Array.from(el.querySelectorAll('.node'))) {
-      const figurine = node.querySelector('span')
-
-      if (figurine) {
-        position += `${figurine.dataset.figurine}`
+      if (node.querySelector('.selected')) {
+        // return pgn
       }
-
-      position += `${node.innerText} `
     }
   }
+
+  return pgn
+}
+
+// this is lazy, just use a MutationObserver
+setInterval(() => {
+  // If the board is flipped, we are playing black
+  const black = document.querySelector('wc-chess-board')?.classList.contains('flipped') || false
+
+  // extract the PGN position from the move list
+  let position = getBoardPosition()
 
   if (position) {
     // send everything to the engine for evaluation

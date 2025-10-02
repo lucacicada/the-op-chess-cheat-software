@@ -116,7 +116,7 @@ document.querySelector('.pv_box').style.display = 'none';
                 {
                     webView.ExecuteScriptAsync(@$"
 document.querySelector('textarea').value = '{position}';
-document.querySelector('.button.button-thin.action.text').click();
+document.querySelector('.button.button-thin.bottom-action.text').click();
 ");
                 }));
 
